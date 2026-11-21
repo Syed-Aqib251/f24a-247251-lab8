@@ -7,8 +7,6 @@ function BookSlip({ onAdd, setMessage, message }) {
   const [copies, setCopies] = useState("0");
 
   function handleAdd() {
-
-    // Check if copies is empty
     if (copies.trim() === "") {
       setMessage("Type the copies");
       return;
@@ -22,7 +20,6 @@ function BookSlip({ onAdd, setMessage, message }) {
 
     onAdd(newBook);
 
-    // Clear inputs after adding
     setTitle("");
     setPrice("");
     setCopies("");
@@ -67,7 +64,7 @@ function BookSlip({ onAdd, setMessage, message }) {
   );
 }
 
-// Task 7: Book List
+// Book List
 function BookList({ books }) {
   return (
     <div>
@@ -87,9 +84,11 @@ function App() {
   const [message, setMessage] = useState("");
 
   function addBook(newBook) {
+    // Keep old books and add the new book
     setBooks([...books, newBook]);
   }
 
+  // Calculate total copies
   const totalCopies = books.reduce(
     (total, book) => total + book.copies,
     0

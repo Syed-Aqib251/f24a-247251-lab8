@@ -1,12 +1,19 @@
 
 import { useState } from "react";
 
-function BookSlip({ onAdd }) {
+function BookSlip({ onAdd, setMessage, message }) {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [copies, setCopies] = useState("0");
 
   function handleAdd() {
+
+    // Check if copies is empty
+    if (copies.trim() === "") {
+      setMessage("Type the copies");
+      return;
+    }
+
     const newBook = {
       title: title,
       price: price,
@@ -15,9 +22,11 @@ function BookSlip({ onAdd }) {
 
     onAdd(newBook);
 
+    // Clear inputs after adding
     setTitle("");
     setPrice("");
     setCopies("");
+    setMessage("");
   }
 
   return (
@@ -52,11 +61,13 @@ function BookSlip({ onAdd }) {
       <br /><br />
 
       <button onClick={handleAdd}>Add</button>
+
+      <p>{message}</p>
     </div>
   );
 }
 
-// Task 7: Book List in a separate function
+// Task 7: Book List
 function BookList({ books }) {
   return (
     <div>
@@ -73,6 +84,7 @@ function BookList({ books }) {
 
 function App() {
   const [books, setBooks] = useState([]);
+  const [message, setMessage] = useState("");
 
   function addBook(newBook) {
     setBooks([...books, newBook]);
@@ -93,9 +105,12 @@ function App() {
         <h1>Your Place</h1>
       </header>
 
-      <BookSlip onAdd={addBook} />
+      <BookSlip
+        onAdd={addBook}
+        setMessage={setMessage}
+        message={message}
+      />
 
-      {/* Task 7: Call BookList component */}
       <BookList books={books} />
 
       <h3>Copies: {totalCopies}</h3>

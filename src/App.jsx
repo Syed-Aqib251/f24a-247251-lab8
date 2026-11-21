@@ -1,10 +1,25 @@
 
 import { useState } from "react";
 
-function BookSlip() {
+function BookSlip({ onAdd }) {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
-  const [copies,setCopies] = useState(0);
+  const [copies, setCopies] = useState("0");
+
+  function handleAdd() {
+    const newBook = {
+      title: title,
+      price: price,
+      copies: Number(copies)
+    };
+
+    onAdd(newBook);
+
+    // Clear the input boxes
+    setTitle("");
+    setPrice("");
+    setCopies("");
+  }
 
   return (
     <div>
@@ -33,21 +48,32 @@ function BookSlip() {
 
       <label>Copies:</label>
 
-      <input 
-      type="text" 
-      value={copies}
-      onChange={(e) => setCopies(e.target.value)}
+      <input
+        type="text"
+        value={copies}
+        onChange={(e) => setCopies(e.target.value)}
       />
 
       <br /><br />
 
-      <button>Add</button>
+      <button onClick={handleAdd}>Add</button>
 
     </div>
   );
 }
 
 function App() {
+  const [books, setBooks] = useState([]);
+
+  function addBook(newBook) {
+    setBooks([...books, newBook]);
+  }
+
+  const totalCopies = books.reduce(
+    (total, book) => total + book.copies,
+    0
+  );
+
   return (
     <div>
 
@@ -59,14 +85,20 @@ function App() {
         <h1>Your Place</h1>
       </header>
 
-      <BookSlip />
+      <BookSlip onAdd={addBook} />
 
       <div>
         <h2>Book List</h2>
+
+        {books.map((book, index) => (
+          <p key={index}>
+            {book.title} {book.price} {book.copies}
+          </p>
+        ))}
       </div>
 
       <div>
-        <h3>Copies: 0</h3>
+        <h3>Copies: {totalCopies}</h3>
       </div>
 
       <footer>

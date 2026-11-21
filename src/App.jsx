@@ -84,11 +84,10 @@ function App() {
   const [message, setMessage] = useState("");
 
   function addBook(newBook) {
-    // Keep old books and add the new book
     setBooks([...books, newBook]);
   }
 
-  // Calculate total copies
+  // Task 10: Calculate total copies automatically
   const totalCopies = books.reduce(
     (total, book) => total + book.copies,
     0

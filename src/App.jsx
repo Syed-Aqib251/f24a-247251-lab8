@@ -15,7 +15,6 @@ function BookSlip({ onAdd }) {
 
     onAdd(newBook);
 
-    // Clear the input boxes
     setTitle("");
     setPrice("");
     setCopies("");
@@ -23,11 +22,9 @@ function BookSlip({ onAdd }) {
 
   return (
     <div>
-
       <h2>Book Slip</h2>
 
       <label>Title:</label>
-
       <input
         type="text"
         value={title}
@@ -37,7 +34,6 @@ function BookSlip({ onAdd }) {
       <br /><br />
 
       <label>Price:</label>
-
       <input
         type="text"
         value={price}
@@ -47,7 +43,6 @@ function BookSlip({ onAdd }) {
       <br /><br />
 
       <label>Copies:</label>
-
       <input
         type="text"
         value={copies}
@@ -57,7 +52,21 @@ function BookSlip({ onAdd }) {
       <br /><br />
 
       <button onClick={handleAdd}>Add</button>
+    </div>
+  );
+}
 
+// Task 7: Book List in a separate function
+function BookList({ books }) {
+  return (
+    <div>
+      <h2>Book List</h2>
+
+      {books.map((book, index) => (
+        <p key={index}>
+          {book.title} {book.price} {book.copies}
+        </p>
+      ))}
     </div>
   );
 }
@@ -76,7 +85,6 @@ function App() {
 
   return (
     <div>
-
       <header style={{
         backgroundColor: "blue",
         color: "white",
@@ -87,24 +95,14 @@ function App() {
 
       <BookSlip onAdd={addBook} />
 
-      <div>
-        <h2>Book List</h2>
+      {/* Task 7: Call BookList component */}
+      <BookList books={books} />
 
-        {books.map((book, index) => (
-          <p key={index}>
-            {book.title} {book.price} {book.copies}
-          </p>
-        ))}
-      </div>
-
-      <div>
-        <h3>Copies: {totalCopies}</h3>
-      </div>
+      <h3>Copies: {totalCopies}</h3>
 
       <footer>
         <p>Roll No: 247251</p>
       </footer>
-
     </div>
   );
 }

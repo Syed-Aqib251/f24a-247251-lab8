@@ -4,6 +4,7 @@ import { useState } from "react";
 function BookSlip() {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
+  const [copies,setCopies] = useState(0);
 
   return (
     <div>
@@ -32,7 +33,11 @@ function BookSlip() {
 
       <label>Copies:</label>
 
-      <input type="text" defaultValue="0" />
+      <input 
+      type="text" 
+      value={copies}
+      onChange={(e) => setCopies(e.target.value)}
+      />
 
       <br /><br />
 
